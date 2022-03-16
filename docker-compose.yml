@@ -1,0 +1,25 @@
+version: '3.0'
+services:
+  postgresdev:
+    image: postgres:13.0-alpine
+    container_name: agiledeckdev-postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - agiledeck-net
+    environment:
+      - POSTGRES_DB=agiledeckdev
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Aavn123!@#
+  agiledeckdev:
+    image: ct-redbull/agiledeckserver
+    container_name: agiledeckdev-server
+    ports:
+      - "8081:8081"
+    networks:
+      - agiledeck-net
+    depends_on:
+      - "postgresdev"
+networks:
+  agiledeck-net:
+    driver: bridge
